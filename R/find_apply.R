@@ -48,9 +48,14 @@ find_fun <- function(IN, E){
   }
 
   if(length(E[tmp_n]) != 0){
-    if(!(E[tmp_n] %in% eq_f)){
-      eq_f <- c(eq_f, E[tmp_n])
+    for(j in 1:length(E[tmp_n])){
+
+      if(!(E[tmp_n][j] %in% eq_f)){
+        eq_f <- c(eq_f, E[tmp_n])
+      }
+
     }
+
   }
 
   if(length(IN) >= 2){
