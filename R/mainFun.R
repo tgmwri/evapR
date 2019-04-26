@@ -290,6 +290,7 @@ extractVAR <- function(e){
   ep <- unlist(strsplit(ep, " "))
   ep <- ep[ep != ""]
   ep <- ep[ep != "0"]
+  ep <- gsub('[[:digit:]]+', "", ep)
 
   return(ep)
 }
