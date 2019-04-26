@@ -294,3 +294,99 @@ extractVAR <- function(e){
 
   return(ep)
 }
+
+
+#' Select best equations
+#'
+#'
+#' Function that creates set of equations based on KGE and MRE
+#' @param TAB table of all calculated equations, can be ctreated with function `compute_coef_table()`
+#'
+#' @export
+#' @examples
+#' TAB <- compute_coef_table(dta)$ult_tab
+#' best_eq_list <- select_best(TAB)
+
+select_best <- function(TAB){    
+  
+  eq_list <- TAB$final_eq
+  
+  sngl <- c("R", "Tw", "Ta")
+  dbl <- c("H", "Tw", "Ta", "V")
+  trpl <- c("Tw", "V", "Ta")
+  
+  best_kge <- data.frame()
+  best_mre <- data.frame()
+  
+  for(m in sngl){
+    eq_select <- find_fun(m, eq_list)
+    best_m <- TAB[TAB$final_eq %in% eq_select, c("KGE", "MRE", "final_eq")]
+    
+    best_kge <- rbind(best_kge, data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = m))
+    best_mre <- rbind(best_mre, data.frame(best_m[best_m$MRE == max(best_m$MRE), ], var = m))
+  }
+  
+  for(m in sngl){
+    for(n in dbl){
+      if(m != n){
+        
+        IN <- c(m, n)
+        
+        eq_select <- find_fun(IN, eq_list)
+        best_m <- TAB[TAB$final_eq %in% eq_select, c("KGE", "MRE", "final_eq")]
+        
+        MK <- data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = paste(IN, collapse = "_"))
+        MM <- data.frame(best_m[best_m$MRE == max(best_m$MRE), ], var = paste(IN, collapse = "_"))
+        
+        if(MK$KGE > best_kge$KGE[best_kge$var == m]){
+          best_kge <- rbind(best_kge, MK)
+        }
+        
+        if(MM$MRE > best_mre$MRE[best_mre$var == m]){
+          best_mre <- rbind(best_mre, MM)
+        }
+        
+      }
+    }
+  }
+  
+  
+  for(m in sngl){
+    for(n in dbl){
+      for(p in trpl){
+        if(m != n & m != p & n != p){
+          
+          IN <- c(m, n, p)
+          
+          eq_select <- find_fun(IN, eq_list)
+          best_m <- TAB[TAB$final_eq %in% eq_select, c("KGE", "MRE", "final_eq")]
+          
+          MK <- data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = paste(IN, collapse = "_"))
+          MM <- data.frame(best_m[best_m$MRE == max(best_m$MRE), ], var = paste(IN, collapse = "_"))
+          
+          if(MK$KGE > best_kge$KGE[best_kge$var == m]){
+            best_kge <- rbind(best_kge, MK)
+          }
+          
+          if(MM$MRE > best_mre$MRE[best_mre$var == m]){
+            best_mre <- rbind(best_mre, MM)
+          }
+          
+        }
+      }
+    }
+  }
+  
+  
+  best_kge <- best_kge[!duplicated(best_kge$final_eq),]
+  
+  best_mre <- best_mre[!duplicated(best_mre$final_eq),]
+  
+  BEST <- rbind(best_kge, best_mre)
+  BEST <- BEST[!duplicated(BEST$final_eq), ]
+  
+  BEST$id <- 1:nrow(BEST) 
+  
+  return(BEST)
+  
+}
