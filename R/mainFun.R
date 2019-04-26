@@ -82,9 +82,9 @@ best_tr <- function(y, x, type = "all", return = "all", cn = FALSE){
 
       p <- data.frame(
         r2 = round(summary(model)$r.squared, 4),
-        sd = round(sd(y - dta.n[, do.types[i]]), 4),
+        sd = round(sd(y - dta.n[, do.types[i]], na.rm = T), 4),
         mae = round(mae(dta.n[, do.types[i]], y), 4),
-        mre = round(mean(abs(dta.n[, do.types[i]] - y)/y)*100, 2),
+        mre = round(mean(abs(dta.n[, do.types[i]] - y)/y, na.rm = T)*100, 2),
         KGE = round(KGE(dta.n[, do.types[i]], y), 4),
         row.names = do.types[i]
       )
