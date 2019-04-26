@@ -103,7 +103,7 @@ for(n in sngl){
         rownames(koefs)[k+i] <- paste0(n, "_", colnames(pr)[i], "_", m)
         h <-  pr[, i] + best_tr(rad$vypar-pr[, i], rad[, m], type = "lm", return = "data")
         kge_t <- c(kge_t, round(KGE(as.numeric(h), rad$vypar), 4))
-        mre_t <- c(mre_t, round(mean(abs(as.numeric(h) - rad$vypar)/rad$vypar)*100, 2))
+        mre_t <- c(mre_t, round(mean(abs(as.numeric(h) - rad$vypar)/rad$vypar, na.rm = T)*100, 2))
       }
 
       k = which(rownames(koefs) == paste0(n, "_lm"))
@@ -214,7 +214,7 @@ for(n in sngl){
           koefs <- rbind(koefs, ttt)
           rownames(koefs)[k+i] <- paste0(n, "_", colnames(pr)[i], "_", m, "_", p)
           kge_t <- c(kge_t, round(KGE(as.numeric(hw), rad$vypar), 4))
-          mre_t <- c(mre_t, round(mean(abs(as.numeric(hw) - rad$vypar)/rad$vypar)*100, 2))
+          mre_t <- c(mre_t, round(mean(abs(as.numeric(hw) - rad$vypar)/rad$vypar, na.rm = T)*100, 2))
         }
 
         k = which(rownames(koefs) == paste0(n, "_lm"))
