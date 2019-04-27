@@ -2,8 +2,8 @@ Package: evapR
 Type: Package
 Title: evapR: An R package to calculate evaporation from water surface
 Version: 0.1.0
-Author: Irina Georgievov√°
-Maintainer: Irina Georgievov√° <irina.georgievova@vuv.cz>
+Author: Irina Georgievov·
+Maintainer: Irina Georgievov· <irina.georgievova@vuv.cz>
 Description: An R package to calculate evaporation from water surface
 License: 
 Encoding: UTF-8
