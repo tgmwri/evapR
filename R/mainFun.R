@@ -323,7 +323,7 @@ select_best <- function(TAB){
     best_m <- TAB[TAB$final_eq %in% eq_select, c("KGE", "MRE", "final_eq")]
     
     best_kge <- rbind(best_kge, data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = m))
-    best_mre <- rbind(best_mre, data.frame(best_m[best_m$MRE == max(best_m$MRE), ], var = m))
+    best_mre <- rbind(best_mre, data.frame(best_m[best_m$MRE == min(best_m$MRE), ], var = m))
   }
   
   for(m in sngl){
@@ -336,7 +336,7 @@ select_best <- function(TAB){
         best_m <- TAB[TAB$final_eq %in% eq_select, c("KGE", "MRE", "final_eq")]
         
         MK <- data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = paste(IN, collapse = "_"))
-        MM <- data.frame(best_m[best_m$MRE == max(best_m$MRE), ], var = paste(IN, collapse = "_"))
+        MM <- data.frame(best_m[best_m$MRE == min(best_m$MRE), ], var = paste(IN, collapse = "_"))
         
         if(MK$KGE > best_kge$KGE[best_kge$var == m]){
           best_kge <- rbind(best_kge, MK)
@@ -362,7 +362,7 @@ select_best <- function(TAB){
           best_m <- TAB[TAB$final_eq %in% eq_select, c("KGE", "MRE", "final_eq")]
           
           MK <- data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = paste(IN, collapse = "_"))
-          MM <- data.frame(best_m[best_m$MRE == max(best_m$MRE), ], var = paste(IN, collapse = "_"))
+          MM <- data.frame(best_m[best_m$MRE == min(best_m$MRE), ], var = paste(IN, collapse = "_"))
           
           if(MK$KGE > best_kge$KGE[best_kge$var == m]){
             best_kge <- rbind(best_kge, MK)
