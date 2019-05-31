@@ -102,14 +102,14 @@ best_tr <- function(y, x, type = "all", return = "all", cn = FALSE){
 
   if(return == "all"){
     if(type == "all"){
-      message(paste0("Doporučuju: ", rownames(tab[tab$r2 == max(tab$r2),]), ", R2 = ", max(tab$r2)))
+      message(paste0("Doporučuju: ", rownames(tab[tab$KGE == max(tab$r2),]), ", KGE = ", max(tab$KGE)))
     }
     if(cn == F){colnames(dta.n) <- NULL}
     return(list(dta.n = dta.n, tab = tab[-1], gg.all = gg.all))
 
   }else if(return == "table"){
     if(type == "all"){
-      message(paste0("Doporučuju: ", rownames(tab[tab$r2 == max(tab$r2),]), ", R2 = ", max(tab$r2)))
+      message(paste0("Doporučuju: ", rownames(tab[tab$KGE == max(tab$KGE),]), ", KGE = ", max(tab$KGE)))
       }
     return(tab = tab[-1])
 
