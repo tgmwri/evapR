@@ -333,7 +333,7 @@ extractVAR <- function(e){
 #' TAB <- compute_coef_table(dta)$ult_tab
 #' best_eq_list <- select_best(TAB)
 
-select_best <- function(TAB){    
+select_best <- function(TAB){
   
   eq_list <- TAB$final_eq
   
@@ -368,9 +368,11 @@ select_best <- function(TAB){
           best_kge <- rbind(best_kge, MK)
         }
         
-        if(MM$MRE > best_mre$MRE[best_mre$var == m]){
-          best_mre <- rbind(best_mre, MM)
-        }
+        suppressWarnings({
+          if(MM$MRE > best_mre$MRE[best_mre$var == m]){
+            best_mre <- rbind(best_mre, MM)
+          }
+        })
         
       }
     }
@@ -394,9 +396,11 @@ select_best <- function(TAB){
             best_kge <- rbind(best_kge, MK)
           }
           
-          if(MM$MRE > best_mre$MRE[best_mre$var == m]){
-            best_mre <- rbind(best_mre, MM)
-          }
+          suppressWarnings({
+            if(MM$MRE > best_mre$MRE[best_mre$var == m]){
+              best_mre <- rbind(best_mre, MM)
+            }
+          })
           
         }
       }
