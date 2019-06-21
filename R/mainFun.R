@@ -364,15 +364,8 @@ select_best <- function(TAB){
         MK <- data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = paste(IN, collapse = "_"))
         MM <- data.frame(best_m[best_m$MRE == min(best_m$MRE), ], var = paste(IN, collapse = "_"))
         
-        if(MK$KGE > best_kge$KGE[best_kge$var == m]){
-          best_kge <- rbind(best_kge, MK)
-        }
-        
-        suppressWarnings({
-          if(MM$MRE > best_mre$MRE[best_mre$var == m]){
-            best_mre <- rbind(best_mre, MM)
-          }
-        })
+        ifelse(MK$KGE > best_kge$KGE[best_kge$var == m], best_kge <- rbind(best_kge, MK), best_kge <- best_kge)
+        ifelse(MM$MRE > best_mre$MRE[best_mre$var == m],  best_mre <- rbind(best_mre, MM), best_mre <- best_mre)
         
       }
     }
@@ -392,17 +385,11 @@ select_best <- function(TAB){
           MK <- data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = paste(IN, collapse = "_"))
           MM <- data.frame(best_m[best_m$MRE == min(best_m$MRE), ], var = paste(IN, collapse = "_"))
           
-          if(MK$KGE > best_kge$KGE[best_kge$var == m]){
-            best_kge <- rbind(best_kge, MK)
-          }
-          
-          suppressWarnings({
-            if(MM$MRE > best_mre$MRE[best_mre$var == m]){
-              best_mre <- rbind(best_mre, MM)
-            }
-          })
+          ifelse(MK$KGE > best_kge$KGE[best_kge$var == m], best_kge <- rbind(best_kge, MK), best_kge <- best_kge)
+          ifelse(MM$MRE > best_mre$MRE[best_mre$var == m],  best_mre <- rbind(best_mre, MM), best_mre <- best_mre)
           
         }
+        
       }
     }
   }
@@ -416,6 +403,7 @@ select_best <- function(TAB){
   BEST <- BEST[!duplicated(BEST$final_eq), ]
   
   BEST$id <- rownames(BEST)
+  rownames(BEST) <- NULL
   
   return(BEST)
   

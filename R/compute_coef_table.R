@@ -240,7 +240,7 @@ for(i in end:nrow(ult_tab)){
 #       triple
 #======================
 
-lk = length(koefs)+1
+lk = nrow(koefs)+1
 trpl <- c("Tw", "V", "Ta")  
 
 for(p in trpl){
