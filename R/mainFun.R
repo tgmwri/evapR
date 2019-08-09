@@ -305,18 +305,12 @@ extractSUM <- function(x, y){
 #' "R"  "H"  "Tw"
 
 extractVAR <- function(e){
-  ep <- gsub("[-]? \\d.\\d*", " ", e)
-  ep <- gsub("E = ", "", ep)
-  ep <- gsub("e\\^", "", ep)
-  ep <- gsub("\\^", "", ep)
-  ep <- gsub("\\d.\\d", "", ep)
-  ep <- gsub("\\+|\\-", "", ep)
-  ep <- gsub("\\(|\\)", "", ep)
+
+  ep <- gsub("[0-9\\.]", "", e)
+  ep <- gsub("\\^|ln|e\\^|E = |-|\\+|,|\\(|\\)", "", ep)
+  ep <- gsub(" $|^ ", "", ep, perl = T)
   ep <- unlist(strsplit(ep, " "))
   ep <- ep[ep != ""]
-  ep <- ep[ep != "0"]
-  ep <- gsub('[[:digit:]]+', "", ep)
-  ep <- gsub('ln', "", ep)
   
   return(ep)
 }
