@@ -96,7 +96,8 @@ compute_coef_table <- function(rad){
       
       for(m in dbl){
         
-        if(m != n & !all(is.na(rad[,m]))){
+          if(!all(is.na(rad[,m]))){
+            if(m != n){
           
           t <- c()
           lnt <- c()
@@ -224,8 +225,12 @@ compute_coef_table <- function(rad){
           ult[, m] <- xlt
           
           ult_tab <- rbind(ult_tab, ult)
-        }
+          }
+          }
       }
+    }
+  }
+        
       
       end <- length(all_coef)+1
       
@@ -237,8 +242,6 @@ compute_coef_table <- function(rad){
         all_coef[[f]] <- data.frame(type = ult_tab$type[i], 
                                     koefs[which(rownames(koefs) == paste0(eq_var[1], "_", gsub("_log|_lm", "", ult_tab$type[i]))), c(1,2)],
                                     koefs[i, c(1,2)])
-      }
-    }
   }
   
   #======================
@@ -246,7 +249,7 @@ compute_coef_table <- function(rad){
   #======================
   
   lk = length(koefs)+1
-  trpl <- c("Tw", "V", "Ta")  
+  trpl <- c("Tw", "V", "Ta", "H")  
   
   for(p in trpl){
     
@@ -262,7 +265,7 @@ compute_coef_table <- function(rad){
       
       if(w[2] != w[1] & w[2] != p & w[1] != p){
         
-        if(!all(is.na(rad[, w[1]])) & !all(is.na(rad[, w[2]])) & !all(is.na(rad[, p]))){
+        if(!all(is.na(rad[, w[1]]) | is.na(rad[, w[2]]) | is.na(rad[, p]))){
           
           if(ww$type == 'lm_lm'){
             h <-  ww$a*rad[, w[1]] + ww$a.1*rad[, w[2]] + ww$b + ww$b.1
@@ -384,11 +387,11 @@ compute_coef_table <- function(rad){
           ult[, p] <- c(tt, lntt)
           
           ult_tab <- rbind(ult_tab, ult)
+        
         }
       }
     }
   }
-  
   
   end <- length(all_coef)+1
   

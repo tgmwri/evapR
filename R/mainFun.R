@@ -376,7 +376,7 @@ select_best <- function(TAB){
     for(n in dbl){
       for(p in trpl){
         if(m != n & m != p & n != p){
-          if(!all(is.na(TAB[,m])) & !all(is.na(TAB[,n])) & !all(is.na(TAB[,p]))){
+          if(!all(is.na(TAB[,m]) | is.na(TAB[,n]) | is.na(TAB[,p]))){
           
           IN <- c(m, n, p)
           
