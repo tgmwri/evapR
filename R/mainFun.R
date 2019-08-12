@@ -339,37 +339,44 @@ select_best <- function(TAB){
   best_mre <- data.frame()
   
   for(m in sngl){
+    if(!all(is.na(TAB[,m]))){
     eq_select <- find_fun(m, eq_list)
     best_m <- TAB[TAB$final_eq %in% eq_select, c("KGE", "MRE", "final_eq", "type")]
     
     best_kge <- rbind(best_kge, data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = m))
     best_mre <- rbind(best_mre, data.frame(best_m[best_m$MRE == min(best_m$MRE), ], var = m))
+    }
   }
   
   for(m in sngl){
     for(n in dbl){
       if(m != n){
-        
-        IN <- c(m, n)
-        
-        eq_select <- find_fun(IN, eq_list)
-        best_m <- TAB[TAB$final_eq %in% eq_select, c("KGE", "MRE", "final_eq", "type")]
-        
-        MK <- data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = paste(IN, collapse = "_"))
-        MM <- data.frame(best_m[best_m$MRE == min(best_m$MRE), ], var = paste(IN, collapse = "_"))
-        
-        ifelse(MK$KGE > best_kge$KGE[best_kge$var == m], best_kge <- rbind(best_kge, MK), best_kge <- best_kge)
-        ifelse(MM$MRE > best_mre$MRE[best_mre$var == m],  best_mre <- rbind(best_mre, MM), best_mre <- best_mre)
-        
+        if(!all(is.na(TAB[,m])) & !all(is.na(TAB[,n]))){
+          
+          IN <- c(m, n)
+          
+          eq_select <- find_fun(IN, eq_list)
+          best_m <- TAB[TAB$final_eq %in% eq_select, c("KGE", "MRE", "final_eq", "type")]
+          
+          MK <- data.frame(best_m[best_m$KGE == max(best_m$KGE), ], var = paste(IN, collapse = "_"))
+          MM <- data.frame(best_m[best_m$MRE == min(best_m$MRE), ], var = paste(IN, collapse = "_"))
+          
+          ifelse(MK$KGE > best_kge$KGE[best_kge$var == m], best_kge <- rbind(best_kge, MK), best_kge <- best_kge)
+          ifelse(MM$MRE > best_mre$MRE[best_mre$var == m],  best_mre <- rbind(best_mre, MM), best_mre <- best_mre)
+          
+        }
       }
     }
   }
+        
+        
   
   
   for(m in sngl){
     for(n in dbl){
       for(p in trpl){
         if(m != n & m != p & n != p){
+          if(!all(is.na(TAB[,m])) & !all(is.na(TAB[,n])) & !all(is.na(TAB[,p]))){
           
           IN <- c(m, n, p)
           
@@ -381,6 +388,8 @@ select_best <- function(TAB){
           
           ifelse(MK$KGE > best_kge$KGE[best_kge$var == m], best_kge <- rbind(best_kge, MK), best_kge <- best_kge)
           ifelse(MM$MRE > best_mre$MRE[best_mre$var == m],  best_mre <- rbind(best_mre, MM), best_mre <- best_mre)
+          
+          }
           
         }
         
