@@ -307,7 +307,7 @@ extractSUM <- function(x, y){
 extractVAR <- function(e){
 
   ep <- gsub("[0-9\\.]", "", e)
-  ep <- gsub("\\^|ln|e\\^|E = |-|\\+|,|\\(|\\)", "", ep)
+  ep <- gsub("\\^|ln|e\\^|E = |-|\\+|,|\\(|\\)|e", "", ep)
   ep <- gsub(" $|^ ", "", ep, perl = T)
   ep <- unlist(strsplit(ep, " "))
   ep <- ep[ep != ""]
