@@ -69,6 +69,9 @@ compute_coef_table <- function(rad){
       ult[, m] <- as.character(t)
       
       ult_tab <- rbind(ult_tab, ult)
+      ult_tab$type <- as.character(ult_tab$type)
+      ult_tab$final_eq <- as.character(ult_tab$final_eq)
+      
       
       coupled[, m] <-  na.omit(ult_tab[m])
       
@@ -86,6 +89,7 @@ compute_coef_table <- function(rad){
   #       double
   #======================
   
+  j_start <- length(all_coef)+1
   coupled2 <- coupled[rep(1:nrow(coupled), each=2), ]
   
   for(n in sngl){
@@ -110,7 +114,7 @@ compute_coef_table <- function(rad){
             
             #----linearni---------------
             tt <- gimme_eq(rad$vypar-pr[, i], rad[, m], type = "lm", message = F)
-            t <- c(t, tt$equation)
+            t <- c(t, as.character(tt$equation))
             koefs <- rbind(koefs, tt)
             rownames(koefs)[k+i] <- paste0(n, "_", colnames(pr)[i], "_", m, "_lm")
             h <-  pr[, i] + best_tr(rad$vypar-pr[, i], rad[, m], type = "lm", return = "data")
@@ -119,7 +123,7 @@ compute_coef_table <- function(rad){
             
             #----logaritmicka-----------
             lntt <- gimme_eq(rad$vypar-pr[, i], rad[, m], type = "log", message = F)
-            lnt <- c(lnt, lntt$equation)
+            lnt <- c(lnt, as.character(lntt$equation))
             koefs <- rbind(koefs, lntt)
             rownames(koefs)[k+(i+1)] <- paste0(n, "_", colnames(pr)[i], "_", m, "_log")
             h_ln <-  pr[, i] + best_tr(rad$vypar-pr[, i], rad[, m], type = "log", return = "data")
@@ -179,8 +183,8 @@ compute_coef_table <- function(rad){
               
             }
             
-            s <- extractSUM(koefs$equation[k+i], koefs$equation[lk+i])
-            s2 <- extractSUM(koefs$equation[k+i], koefs$equation[lk_ln+i])
+            s <- extractSUM(koefs$equation[k+j], koefs$equation[lk+i])
+            s2 <- extractSUM(koefs$equation[k+j], koefs$equation[lk_ln+i])
             
             if(s > 0){
               feq <- paste0(feq," + ", round(abs(s), 4))
@@ -248,12 +252,12 @@ compute_coef_table <- function(rad){
   #       triple
   #======================
   
-  lk = length(koefs)+1
+  lk = nrow(koefs)+1
   trpl <- c("Tw", "V", "Ta", "H")  
   
   for(p in trpl){
     
-    for(j in 10:length(all_coef)){ 
+    for(j in j_start:length(all_coef)){ 
       
       t <- tt <- c()
       lnt <- lntt <- c()
@@ -261,9 +265,10 @@ compute_coef_table <- function(rad){
       final_eq <- c()
       
       ww <- all_coef[[j]]
+      ww$type <- as.character(ww$type)
       w <- extractVAR(names(all_coef[j]))
       
-      if(w[2] != w[1] & w[2] != p & w[1] != p){
+      if((w[2] != w[1]) & (w[2] != p) & (w[1] != p)){
         
         if(!all(is.na(rad[, w[1]]) | is.na(rad[, w[2]]) | is.na(rad[, p]))){
           
