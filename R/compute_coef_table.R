@@ -147,15 +147,15 @@ compute_coef_table <- function(rad){
             if(i == 0){
               
               if(koefs$a[lk+i]>0){
-                feq <- paste0("E = ", round(koefs$a[k+j], 4), n, " + ", round(koefs$a[lk+i], 4), m)
+                feq <- paste0("E = ", round(koefs$a[k+j], 6), n, " + ", round(koefs$a[lk+i], 6), m)
               }else{
-                feq <- paste0("E = ", round(koefs$a[k+j], 4), n, " - ", abs(round(koefs$a[lk+i], 4)), m)
+                feq <- paste0("E = ", round(koefs$a[k+j], 6), n, " - ", abs(round(koefs$a[lk+i], 6)), m)
               }
               
               if(koefs$a[lk_ln+i]>0){
-                feq2 <- paste0("E = ", round(koefs$a[k+j], 4), n, " + ", round(koefs$a[lk_ln+i], 4), " ln(", m, ")")
+                feq2 <- paste0("E = ", round(koefs$a[k+j], 6), n, " + ", round(koefs$a[lk_ln+i], 6), " ln(", m, ")")
               }else{
-                feq2 <- paste0("E = ", round(koefs$a[k+j], 4), n, " - ", abs(round(koefs$a[lk_ln+i], 4)), " ln(", m, ")")
+                feq2 <- paste0("E = ", round(koefs$a[k+j], 6), n, " - ", abs(round(koefs$a[lk_ln+i], 6)), " ln(", m, ")")
               }
               
               
@@ -165,9 +165,9 @@ compute_coef_table <- function(rad){
               tt <- gsub("x", n, tt)
               
               if(koefs$a[lk+i]>0){
-                feq <- paste0(tt," + ", round(koefs$a[lk+i], 4), m)
+                feq <- paste0(tt," + ", round(koefs$a[lk+i], 6), m)
               }else{
-                feq <- paste0(tt, " - ", abs(round(koefs$a[lk+i], 4)), m)
+                feq <- paste0(tt, " - ", abs(round(koefs$a[lk+i], 6)), m)
               }
               
               
@@ -175,9 +175,9 @@ compute_coef_table <- function(rad){
               lntt <- gsub("x", n, lntt)
               
               if(koefs$a[lk_ln+i]>0){
-                feq2 <- paste0(lntt," + ", round(koefs$a[lk_ln+i], 4), " ln(", m, ")")
+                feq2 <- paste0(lntt," + ", round(koefs$a[lk_ln+i], 6), " ln(", m, ")")
               }else{
-                feq2 <- paste0(lntt, " - ", abs(round(koefs$a[lk_ln+i], 4)), " ln(", m, ")")
+                feq2 <- paste0(lntt, " - ", abs(round(koefs$a[lk_ln+i], 6)), " ln(", m, ")")
               }
               
               
@@ -187,15 +187,15 @@ compute_coef_table <- function(rad){
             s2 <- extractSUM(koefs$equation[k+j], koefs$equation[lk_ln+i])
             
             if(s > 0){
-              feq <- paste0(feq," + ", round(abs(s), 4))
+              feq <- paste0(feq," + ", round(abs(s), 6))
             }else{
-              feq <- paste0(feq," - ", round(abs(s), 4))
+              feq <- paste0(feq," - ", round(abs(s), 6))
             }
             
             if(s2 > 0){
-              feq2 <- paste0(feq2," + ", round(abs(s2), 4))
+              feq2 <- paste0(feq2," + ", round(abs(s2), 6))
             }else{
-              feq2 <- paste0(feq2," - ", round(abs(s2), 4))
+              feq2 <- paste0(feq2," - ", round(abs(s2), 6))
             }
             
             
@@ -328,34 +328,34 @@ compute_coef_table <- function(rad){
           feq <- gsub('.{8}$', '', f)
           
           if(koefs$a[lk]>0){
-            feq <- paste0(feq, " + ", round(koefs$a[lk], 4), p)
+            feq <- paste0(feq, " + ", round(koefs$a[lk], 6), p)
           }else{
-            feq <- paste0(feq, " - ", abs(round(koefs$a[lk], 4)), p)
+            feq <- paste0(feq, " - ", abs(round(koefs$a[lk], 6)), p)
           }
           
           s <- extractSUM(f, koefs$equation[lk])
           
           if(s > 0){
-            feq <- paste0(feq," + ", round(s, 4))
+            feq <- paste0(feq," + ", round(s, 6))
           }else{
-            feq <- paste0(feq," - ", round(abs(s), 4))
+            feq <- paste0(feq," - ", round(abs(s), 6))
           }
           
           
           feq2 <- gsub('.{8}$', '', f)
           
           if(koefs$a[lk+1]>0){
-            feq2 <- paste0(feq2, " + ", round(koefs$a[lk+1], 4), " ln(", p, ")")
+            feq2 <- paste0(feq2, " + ", round(koefs$a[lk+1], 6), " ln(", p, ")")
           }else{
-            feq2 <- paste0(feq2, " - ", abs(round(koefs$a[lk+1], 4)), " ln(", p, ")")
+            feq2 <- paste0(feq2, " - ", abs(round(koefs$a[lk+1], 6)), " ln(", p, ")")
           }
           
           s2 <- extractSUM(f, koefs$equation[lk+1])
           
           if(s2 > 0){
-            feq2 <- paste0(feq2," + ", round(s2, 4))
+            feq2 <- paste0(feq2," + ", round(s2, 6))
           }else{
-            feq2 <- paste0(feq2," - ", round(abs(s2), 4))
+            feq2 <- paste0(feq2," - ", round(abs(s2), 6))
           }
           
           final_eq <- c(final_eq, feq, feq2)
